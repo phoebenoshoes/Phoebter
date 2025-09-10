@@ -1,9 +1,11 @@
--- Phoebter by Kulusi-ArgentDawn EU ( the phoebster )
+-- Phoebter 1.1.0 by Kulusi-ArgentDawn EU ( the phoebster )
 -- All rights reserved
+local version = C_AddOns.GetAddOnMetadata("Phoebter", "Version") -- get version from .toc 
 
 CurrentBuff = ""
 AutoPrism = false
-local refreshTongues, refreshInky, refreshPrism = true, true, true
+local refreshTongues, refreshInky, refreshPrism = true, true, true -- for if reminder has been declined to prevent it from appearing again. 
+---------------------------------------------------------------------not to be confused with CheckX which sets if buff should be checked for at all
 TONGUES_ID = 2336
 INKY_ID = 185394
 PRISM_SPELL_ID = 374957 -- prism has a different id on buff vs when you cast the spell lol
@@ -186,12 +188,14 @@ SLASH_PHOEBTER1, SLASH_PHOEBTER2 = "/pb", "/phoebter"
 function SlashCmdList.PHOEBTER(command)
     if command == "" or command == "help" then
         -- help message
-        print("Type '/pb' or '/phoebter' followed by argument to toggle reminders.")
+        print("Phoebter|cffff80ff v" .. version)
+        print("Type |cffab70e3 /pb |cffffffff or |cffab70e3 /phoebter |cffffffff followed by argument.") -- |cff indicates colour change, following 6 digits are hexcode of colour
         print("Valid commands are:")
-        print("- '/pb tongues' - toggle checking and automatic refreshing for Elixir of Tongues")
-        print("- '/pb inky' - toggle checking and automatic refreshing for Inky Black Potion")
-        print("- '/pb prism' - toggle checking for Projection Prism")
-        print("- '/pb autoprism' - toggle automatic refreshing for Projection Prism")
+        print("- |cffab70e3 /pb tongues|cffffffff - toggle checking and automatic refreshing for Elixir of Tongues")
+        print("- |cffab70e3 /pb inky|cffffffff - toggle checking and automatic refreshing for Inky Black Potion")
+        print("- |cffab70e3 /pb prism|cffffffff - toggle checking for Projection Prism")
+        print("- |cffab70e3 /pb autoprism|cffffffff - toggle automatic refreshing for Projection Prism")
+        print("- |cffab70e3 /pb show|cffffffff - show current settings")
     elseif command == "tongues" then
         -- toggle tongues
         CheckTongues = not CheckTongues
@@ -208,15 +212,27 @@ function SlashCmdList.PHOEBTER(command)
         -- toggle autoprism
         AutoPrism = not AutoPrism
         ToggleMessage(AutoPrism, "Automatic prism refreshing", command)
+    elseif command == "show" then
+        -- show current settings
+        print("Elixir of Tongues: " .. BoolToOnOff(CheckTongues))
+        print("Inky Black Potion: " .. BoolToOnOff(CheckInky))
+        print("Projection Prism checking: " .. BoolToOnOff(CheckPrism))
+        print("Projection Prism automatic refreshing: " .. BoolToOnOff(AutoPrism))
     end
 end
 
 function ToggleMessage(toggled, toggledStr, command)
-    local onOff = "off"
-    if toggled then
-        onOff = "on"
+    local onOff = BoolToOnOff(toggled)
+    print(toggledStr .. " turned " .. onOff .. ". Type |cffab70e3/pb " .. command .. "|cffffffff to toggle.")
+end
+
+-- converts bool to "on" or "off" with colour shenanigans
+function BoolToOnOff(bool)
+    if bool then
+        return "|cff00ff00on|cffffffff"
+    else
+        return "|cffff0000off|cffffffff"
     end
-    print(toggledStr .. " turned " .. onOff .. ". Type '/pb " .. command .. "' to toggle.")
 end
 
 -- send message once addon has loaded and initialise variables
@@ -233,7 +249,7 @@ local function onLoad(self, event, name)
             if CheckPrism == nil then
                 CheckPrism = true
             end
-            print("you are now using a certified phoebster addon :D type '/pb' for help")
+            print("you are now using a certified phoebster addon :D type |cffab70e3 /pb|cffffffff for help (|cffff80ff v" .. version .. "|cffffffff)")
         end
     end
 end
