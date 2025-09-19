@@ -1,4 +1,4 @@
--- Phoebter 1.1.0 by Kulusi-ArgentDawn EU ( the phoebster )
+-- Phoebter 1.1.1 by Kulusi-ArgentDawn EU ( the phoebster )
 -- All rights reserved
 local version = C_AddOns.GetAddOnMetadata("Phoebter", "Version") -- get version from .toc 
 
@@ -171,7 +171,7 @@ local function prismHandler(self, event, ...)
     elseif event == "UNIT_AURA" then
         -- checks for prism being applied to ask if you want autoprism
         local target, info = ...
-        if info.addedAuras then
+        if target == "player" and info.addedAuras then
             local id = info.addedAuras[1].name
             if id == "Prismatic Projection" then
                 StaticPopup_Show("PRISM_POP_UP_BOX")

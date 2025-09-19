@@ -2,7 +2,7 @@
 ## Title: Phoebter
 ## Notes: Reminds you to refresh Elixir of Tongues/Inky Black Potion/Projection Prism
 ## Author: the phoebster
-## Version: 1.0.1
+## Version: 1.1.1
 ## RequiredDeps:
 ## X-Curse-Project-ID: 1335145
 ## SavedVariables: CheckTongues, CheckInky, CheckPrism
